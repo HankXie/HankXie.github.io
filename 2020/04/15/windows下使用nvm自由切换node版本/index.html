@@ -19,10 +19,10 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-<meta name="keywords" content="" />
+<meta name="keywords" content="工具" />
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ..." />
+<meta name="description" content="在接触nvm前查看了很多资料，但是总有些一些地方迷迷糊糊的，但幸好磕磕碰碰最后也算安装成功了。在此文中，会特意指明一些坑，防止再次踩坑。第一个坑就是，如果你已经单独安装了node，建议先卸载，再..." />
 
 
 <meta name="robots" content="all" />
@@ -33,7 +33,7 @@
 
 <title>
     
-    Hello World |
+    windows下使用nvm自由切换node版本 |
     
     HankXie的博客
 </title>
@@ -142,22 +142,24 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Hello World">
+        <h1 id="windows下使用nvm自由切换node版本">
             
-            Hello World
+            windows下使用nvm自由切换node版本
             
         </h1>
         <div class="post-meta">
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        
+        <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
     </span>
     
     
     <span class="fa-wrap">
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
             
         </span>
     </span>
@@ -182,19 +184,47 @@
     </div>
     
     <div class="post-body post-content">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <p>在接触nvm前查看了很多资料，但是总有些一些地方迷迷糊糊的，但幸好磕磕碰碰最后也算安装成功了。在此文中，会特意指明一些坑，防止再次踩坑。第一个坑就是，如果你已经单独安装了node，建议先<strong>卸载</strong>，再来看本文。</p>
+<h3 id="1-nvm-下载"><a href="#1-nvm-下载" class="headerlink" title="1. nvm 下载"></a>1. nvm 下载</h3><hr>
+<p>nvm 的下载地址：<a href="https://link.jianshu.com?t=https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a> 。选择第一个 <strong>nvm-noinstall.zip</strong> ，然后解压在系统盘（一般开发相关的文件我都放C盘，但是放别的盘也是可以的）。我放的目录路径是<strong><code>C:\dev\nvm</code></strong>。解压出来的文件有：</p>
+<ul>
+<li>elevate.cmd</li>
+<li>elevate.vbs</li>
+<li>install.cmd</li>
+<li>LICENSE</li>
+<li>nvm.exe</li>
+</ul>
+<h3 id="2-nvm-安装"><a href="#2-nvm-安装" class="headerlink" title="2. nvm 安装"></a>2. nvm 安装</h3><hr>
+<p>双击 <code>install.cmd</code> ，是以控制台形式显示的，第一下直接按回车，然后会在C盘根目录产生<code>settings.txt</code>，把这个文件放进刚刚解压的那个目录，然后修改<code>settings.txt</code>内容，改成下面那样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root: C:\dev\nvm</span><br><span class="line">path: C:\dev\nodejs </span><br><span class="line">arch: 64</span><br><span class="line">proxy: none </span><br><span class="line">node_mirror: http:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;node&#x2F;</span><br><span class="line">npm_mirror: https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;npm&#x2F;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>但是有些人很不幸，这个方法行不通，因为打开 <code>install.cmd</code>按下回车后，显示拒绝访问注册表路径，并弹出一个settings.txt。这时候，你只要淡定地叉掉那个文本以及控制台，然后在刚刚的目录里新建一个文件<code>settings.txt</code>，最后把上面的内容复制进去就可以了。</p>
+<ul>
+<li>root ： nvm的存放地址</li>
+<li>path ： 存放指向node版本的快捷方式，使用nvm的过程中会自动生成。一般写的时候与nvm同级。</li>
+<li>arch ： 电脑系统是64位就写64,32位就写32</li>
+<li>proxy ： 代理</li>
+</ul>
+<h3 id="3-nvm-配置"><a href="#3-nvm-配置" class="headerlink" title="3. nvm 配置"></a>3. nvm 配置</h3><hr>
+<ul>
+<li>以控制台方法执行成功的，在环境变量里会自动配置了 <strong>NVM_HOME</strong> 和 <strong>NVM_SYMLINK</strong> ，这时候只要修改相应的路径就行了。</li>
+<li>直接创建settings文件的可以在环境变量里创建 <strong>NVM_HOME</strong> 和 <strong>NVM_SYMLINK</strong>，并添加路径<br>要是嫌弃可视化界面打开环境变量的步骤太麻烦，可以直接使用 ** <code>windows+r =&gt; sysdm.cpl</code> **</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NVM_HOME： C:\dev\nvm</span><br><span class="line">NVM_SYMLINK ： C:\dev\nodejs</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<ul>
+<li>在<strong>PATH</strong>里加上<strong><code>;%NVM_HOME%;%NVM_SYMLINK%;</code></strong>。<br>一键控制台install的还要检查 环境变量 <strong>PATH</strong> 上的路径有没有添加<code>C:\dev\nvm</code>以及<code>C:\dev\nodejs</code>,有的话就删掉。</li>
+</ul>
+<h3 id="4-检测安装结果"><a href="#4-检测安装结果" class="headerlink" title="4. 检测安装结果"></a>4. 检测安装结果</h3><hr>
+<p>打开控制台，输入：<code>nvm -v</code>,若是出现版本信息，则安装。若报错，那就重新把步骤再捋一遍。</p>
+<ul>
+<li>检查环境变量是否配置成功：可以在控制台输入：<code>set [环境变量名]</code>，查看路径是否填写错误</li>
+</ul>
+<h3 id="5-使用node"><a href="#5-使用node" class="headerlink" title="5. 使用node"></a>5. 使用node</h3><hr>
+<ul>
+<li>控制台下载 =&gt; 输入：<code>nvm install [版本号]</code>，下载最新版的可以直接输<code>nvm install latest</code></li>
+<li>下载完成后，在控制台输入：<code>nvm use [版本号]</code>。即使用这个版本号的node了。在use后，上面所说的nodejs文件夹就自动生成了。（在use之前是没有的哦）<h3 id="6-使用效果"><a href="#6-使用效果" class="headerlink" title="6. 使用效果"></a>6. 使用效果</h3>标*代表当前版本<br><img src="https://upload-images.jianshu.io/upload_images/3021634-5086244c29b5795d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果.png"></li>
+</ul>
 
     </div>
     
@@ -229,41 +259,13 @@
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2020/04/15/SpringBoot%E4%B8%ADMybatis%E6%89%93%E5%8D%B0sql/" class="pre-post btn btn-default" title='SpringBoot中Mybatis打印sql'>
-        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+    
+    <a href="/2020/04/15/%E5%89%8D%E7%AB%AF-test/" class="next-post btn btn-default" title='前端测试'>
+        <span class="hidden-lg">下一篇</span>
         <span class="hidden-xs">
-            SpringBoot中Mybatis打印sql</span>
+            前端测试</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
-    
-</div>
-
-<div id="comments">
-    
-
-<div id="vcomments" class="valine"></div>
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-<script>
-new Valine({
-    av: AV,
-    el: '#vcomments',
-    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-    placeholder: '说点什么吧',
-    notify: false,
-    verify: true,
-    avatar: 'mm',
-    meta: 'nick,mail'.split(','),
-    pageSize: '10',
-    path: window.location.pathname,
-    lang: 'zh-CN'.toLowerCase()
-})
-</script>
-
-
 </div>
 
                 </main>
@@ -274,7 +276,7 @@ new Valine({
             文章目录
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-nvm-下载"><span class="toc-text">1. nvm 下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-nvm-安装"><span class="toc-text">2. nvm 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-nvm-配置"><span class="toc-text">3. nvm 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-检测安装结果"><span class="toc-text">4. 检测安装结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用node"><span class="toc-text">5. 使用node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用效果"><span class="toc-text">6. 使用效果</span></a></li></ol>
         
     </div>
 </aside>
