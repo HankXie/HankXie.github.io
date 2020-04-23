@@ -19,10 +19,11 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-<meta name="keywords" content="工具" />
+<meta name="keywords" content="后端" />
 
 
-<meta name="description" content="在接触nvm前查看了很多资料，但是总有些一些地方迷迷糊糊的，但幸好磕磕碰碰最后也算安装成功了。在此文中，会特意指明一些坑，防止再次踩坑。第一个坑就是，如果你已经单独安装了node，建议先卸载，再..." />
+<meta name="description" content="1、进程/线程1.1、进程是程序在操作系统中的一次执行过程，系统进行资源分配和调度的一个独立单位。
+1.2、线程是进程的一个执行实体，是 CPU 调度和分派的基本单位，它是比进程更小的能独立运行..." />
 
 
 <meta name="robots" content="all" />
@@ -33,7 +34,7 @@
 
 <title>
     
-    windows下使用nvm自由切换node版本 |
+    进程、线程、协程、并发、并行 概念介绍 |
     
     HankXie的博客
 </title>
@@ -142,16 +143,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="windows下使用nvm自由切换node版本">
+        <h1 id="进程、线程、协程、并发、并行 概念介绍">
             
-            windows下使用nvm自由切换node版本
+            进程、线程、协程、并发、并行 概念介绍
             
         </h1>
         <div class="post-meta">
     
     <span class="categories-meta fa-wrap">
         <i class="fa fa-folder-open-o"></i>
-        <a class="category-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+        <a class="category-link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
     </span>
     
     
@@ -159,7 +160,7 @@
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
-            <a class="tag-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+            <a class="tag-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a>
             
         </span>
     </span>
@@ -169,7 +170,7 @@
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2020/04/15</span>
+            2020/04/23</span>
     </span>
     
     <span class="fa-wrap">
@@ -184,47 +185,17 @@
     </div>
     
     <div class="post-body post-content">
-        <p>在接触nvm前查看了很多资料，但是总有些一些地方迷迷糊糊的，但幸好磕磕碰碰最后也算安装成功了。在此文中，会特意指明一些坑，防止再次踩坑。第一个坑就是，如果你已经单独安装了node，建议先<strong>卸载</strong>，再来看本文。</p>
-<h3 id="1-nvm-下载"><a href="#1-nvm-下载" class="headerlink" title="1. nvm 下载"></a>1. nvm 下载</h3><hr>
-<p>nvm 的下载地址：<a href="https://link.jianshu.com?t=https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener">https://github.com/coreybutler/nvm-windows/releases</a> 。选择第一个 <strong>nvm-noinstall.zip</strong> ，然后解压在系统盘（一般开发相关的文件我都放C盘，但是放别的盘也是可以的）。我放的目录路径是<strong><code>C:\dev\nvm</code></strong>。解压出来的文件有：</p>
-<ul>
-<li>elevate.cmd</li>
-<li>elevate.vbs</li>
-<li>install.cmd</li>
-<li>LICENSE</li>
-<li>nvm.exe</li>
-</ul>
-<h3 id="2-nvm-安装"><a href="#2-nvm-安装" class="headerlink" title="2. nvm 安装"></a>2. nvm 安装</h3><hr>
-<p>双击 <code>install.cmd</code> ，是以控制台形式显示的，第一下直接按回车，然后会在C盘根目录产生<code>settings.txt</code>，把这个文件放进刚刚解压的那个目录，然后修改<code>settings.txt</code>内容，改成下面那样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root: C:\dev\nvm</span><br><span class="line">path: C:\dev\nodejs </span><br><span class="line">arch: 64</span><br><span class="line">proxy: none </span><br><span class="line">node_mirror: http:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;node&#x2F;</span><br><span class="line">npm_mirror: https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;npm&#x2F;</span><br></pre></td></tr></table></figure>
-
-<p>但是有些人很不幸，这个方法行不通，因为打开 <code>install.cmd</code>按下回车后，显示拒绝访问注册表路径，并弹出一个settings.txt。这时候，你只要淡定地叉掉那个文本以及控制台，然后在刚刚的目录里新建一个文件<code>settings.txt</code>，最后把上面的内容复制进去就可以了。</p>
-<ul>
-<li>root ： nvm的存放地址</li>
-<li>path ： 存放指向node版本的快捷方式，使用nvm的过程中会自动生成。一般写的时候与nvm同级。</li>
-<li>arch ： 电脑系统是64位就写64,32位就写32</li>
-<li>proxy ： 代理</li>
-</ul>
-<h3 id="3-nvm-配置"><a href="#3-nvm-配置" class="headerlink" title="3. nvm 配置"></a>3. nvm 配置</h3><hr>
-<ul>
-<li>以控制台方法执行成功的，在环境变量里会自动配置了 <strong>NVM_HOME</strong> 和 <strong>NVM_SYMLINK</strong> ，这时候只要修改相应的路径就行了。</li>
-<li>直接创建settings文件的可以在环境变量里创建 <strong>NVM_HOME</strong> 和 <strong>NVM_SYMLINK</strong>，并添加路径<br>要是嫌弃可视化界面打开环境变量的步骤太麻烦，可以直接使用 ** <code>windows+r =&gt; sysdm.cpl</code> **</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NVM_HOME： C:\dev\nvm</span><br><span class="line">NVM_SYMLINK ： C:\dev\nodejs</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在<strong>PATH</strong>里加上<strong><code>;%NVM_HOME%;%NVM_SYMLINK%;</code></strong>。<br>一键控制台install的还要检查 环境变量 <strong>PATH</strong> 上的路径有没有添加<code>C:\dev\nvm</code>以及<code>C:\dev\nodejs</code>,有的话就删掉。</li>
-</ul>
-<h3 id="4-检测安装结果"><a href="#4-检测安装结果" class="headerlink" title="4. 检测安装结果"></a>4. 检测安装结果</h3><hr>
-<p>打开控制台，输入：<code>nvm -v</code>,若是出现版本信息，则安装。若报错，那就重新把步骤再捋一遍。</p>
-<ul>
-<li>检查环境变量是否配置成功：可以在控制台输入：<code>set [环境变量名]</code>，查看路径是否填写错误</li>
-</ul>
-<h3 id="5-使用node"><a href="#5-使用node" class="headerlink" title="5. 使用node"></a>5. 使用node</h3><hr>
-<ul>
-<li>控制台下载 =&gt; 输入：<code>nvm install [版本号]</code>，下载最新版的可以直接输<code>nvm install latest</code></li>
-<li>下载完成后，在控制台输入：<code>nvm use [版本号]</code>。即使用这个版本号的node了。在use后，上面所说的nodejs文件夹就自动生成了。（在use之前是没有的哦）<h3 id="6-使用效果"><a href="#6-使用效果" class="headerlink" title="6. 使用效果"></a>6. 使用效果</h3>标*代表当前版本<br><img src="https://upload-images.jianshu.io/upload_images/3021634-5086244c29b5795d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果.png"></li>
-</ul>
+        <h3 id="1、进程-线程"><a href="#1、进程-线程" class="headerlink" title="1、进程/线程"></a>1、进程/线程</h3><h4 id="1-1、进程"><a href="#1-1、进程" class="headerlink" title="1.1、进程"></a>1.1、进程</h4><p>是程序在<code>操作系统</code>中的一次执行过程，系统进行资源分配和调度的<code>一个独立</code>单位。</p>
+<h4 id="1-2、线程"><a href="#1-2、线程" class="headerlink" title="1.2、线程"></a>1.2、线程</h4><p>是进程的一个执行实体，是 CPU 调度和分派的基本单位，它是比进程更小的能独立运行的基本单位。</p>
+<p>一个进程可以<code>创建</code>和<code>撤销</code>多个线程，同<code>一个</code>进程中的<code>多个线程</code>之间可以<code>并发</code>执行。</p>
+<h3 id="2、并发-并行"><a href="#2、并发-并行" class="headerlink" title="2、并发/并行"></a>2、并发/并行</h3><h4 id="2-1、并发"><a href="#2-1、并发" class="headerlink" title="2.1、并发"></a>2.1、并发</h4><p>多线程程序在<code>单</code>核心的 cpu 上运行，称为<code>并发</code>；</p>
+<h4 id="2-2、并行"><a href="#2-2、并行" class="headerlink" title="2.2、并行"></a>2.2、并行</h4><p>多线程程序在<code>多</code>核心的 cpu 上运行，称为<code>并行</code>。</p>
+<h4 id="2-3、并发与并行区别？"><a href="#2-3、并发与并行区别？" class="headerlink" title="2.3、并发与并行区别？"></a>2.3、<code>并发</code>与<code>并行</code>区别？</h4><p>并发与并行<code>并不</code>相同，</p>
+<p><code>并发</code>主要由切换<code>时间片</code>来实现“同时”运行，</p>
+<p><code>并行</code>则是直接利用<code>多核</code>实现多线程的运行，Go程序可以设置使用核心数，以发挥多核计算机的能力。</p>
+<h4 id="2-4、上下文"><a href="#2-4、上下文" class="headerlink" title="2.4、上下文"></a>2.4、<code>上下文</code></h4><p><code>并发</code>意味着<code>程序</code>在<code>运行时</code>有<code>多个</code>执行上下文，对应着<code>多个</code>调用栈</p>
+<h3 id="3、协程-线程"><a href="#3、协程-线程" class="headerlink" title="3、协程/线程"></a>3、协程/线程</h3><h4 id="3-1、协程"><a href="#3-1、协程" class="headerlink" title="3.1、协程"></a>3.1、协程</h4><p>协程：<code>独立</code>的<code>栈</code>空间，共享<code>堆</code>空间，<code>调度</code>由用户<code>自己</code>控制，本质上有点类似于<code>用户级</code>线程，这些用户级线程的调度也是自己实现的。</p>
+<h4 id="3-2、线程"><a href="#3-2、线程" class="headerlink" title="3.2、线程"></a>3.2、线程</h4><p>线程：一个线程上可以跑多个协程，协程是轻量级的线程。</p>
 
     </div>
     
@@ -259,17 +230,11 @@
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2020/04/23/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E5%8D%8F%E7%A8%8B%E5%B9%B6%E5%8F%91%E5%B9%B6%E8%A1%8C%E6%A6%82%E5%BF%B5%E4%BB%8B%E7%BB%8D/" class="pre-post btn btn-default" title='进程、线程、协程、并发、并行 概念介绍'>
-        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-        <span class="hidden-xs">
-            进程、线程、协程、并发、并行 概念介绍</span>
-    </a>
     
-    
-    <a href="/2020/04/15/angularjs%E5%AE%9E%E7%8E%B0%E7%94%9F%E6%88%90%E4%BA%8C%E7%BB%B4%E7%A0%81/" class="next-post btn btn-default" title='angularjs实现生成二维码'>
+    <a href="/2020/04/15/windows%E4%B8%8B%E4%BD%BF%E7%94%A8nvm%E8%87%AA%E7%94%B1%E5%88%87%E6%8D%A2node%E7%89%88%E6%9C%AC/" class="next-post btn btn-default" title='windows下使用nvm自由切换node版本'>
         <span class="hidden-lg">下一篇</span>
         <span class="hidden-xs">
-            angularjs实现生成二维码</span><i class="fa fa-angle-right fa-fw"></i>
+            windows下使用nvm自由切换node版本</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
 </div>
@@ -282,7 +247,7 @@
             文章目录
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-nvm-下载"><span class="toc-text">1. nvm 下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-nvm-安装"><span class="toc-text">2. nvm 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-nvm-配置"><span class="toc-text">3. nvm 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-检测安装结果"><span class="toc-text">4. 检测安装结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-使用node"><span class="toc-text">5. 使用node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-使用效果"><span class="toc-text">6. 使用效果</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、进程-线程"><span class="toc-text">1、进程&#x2F;线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1、进程"><span class="toc-text">1.1、进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2、线程"><span class="toc-text">1.2、线程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、并发-并行"><span class="toc-text">2、并发&#x2F;并行</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1、并发"><span class="toc-text">2.1、并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2、并行"><span class="toc-text">2.2、并行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3、并发与并行区别？"><span class="toc-text">2.3、并发与并行区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4、上下文"><span class="toc-text">2.4、上下文</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、协程-线程"><span class="toc-text">3、协程&#x2F;线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1、协程"><span class="toc-text">3.1、协程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2、线程"><span class="toc-text">3.2、线程</span></a></li></ol></li></ol>
         
     </div>
 </aside>
